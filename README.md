@@ -17,7 +17,7 @@ To create the chart, pass in the DOM container id and settings:
 var container_id = "chart-container";
 var settings = {
   data: [["00:00", 1, 3, "0000"], ["00:30", 2, 15, "0030"]],
-  format: ["label", "color", "height", "custom_field"],
+  columnNames: ["label", "color", "height", "custom_field"],
   dataIndexForLabels: 0,
   dataIndexForValues: 1,
   dataIndexForHeights: 2
@@ -42,28 +42,28 @@ settings["data"] = [
 ];
 ```
 
-### "format"
-The format takes any user-specified string. This is used for creating data attributes on the DOM element. For example, if the format is ["label", "color", "height"], for each DOM element, there will be data-label, data-color, and data-height attributes.
+### "columnNames"
+This is used for creating data attributes on the DOM element. For example, if the column names are ["label", "color", "height"], for each DOM element, there will be data-label, data-color, and data-height attributes.
 ```JavaScript
-settings["format"] = ["label", "color", "height", "custom_field"];
+settings["columnNames"] = ["label", "color", "height", "custom_field"];
 ```
 
 ### "dataIndexForLabels"
 The column index in the data matrix for showing labels under each block.
 ```JavaScript
-settings["dataIndexForLabels"] = 0; // format[0] is for the label of the block
+settings["dataIndexForLabels"] = 0;
 ```
 
 ### "dataIndexForColors"
 The column index in the data matrix for computing the color of each block.
 ```JavaScript
-settings["dataIndexForColors"] = 1; // format[1] is for the color of the block
+settings["dataIndexForColors"] = 1;
 ```
 
 ### "dataIndexForHeights"
 The column index in the data matrix for computing the height of each block.
 ```JavaScript
-settings["dataIndexForHeights"] = 2; // format[2] is for the height of the block
+settings["dataIndexForHeights"] = 2;
 ```
 
 ### "useColorQuantiles"
