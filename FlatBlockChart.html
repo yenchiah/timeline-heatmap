@@ -1,0 +1,118 @@
+<!doctype html>
+<html>
+<head>
+  <title>Flat Block Chart</title>
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700,600,300" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans+Condensed:700" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Raleway:400,500" rel="stylesheet" type="text/css">
+  <link href="FlatBlockChart.css" media="screen" rel="stylesheet" type="text/css"/>
+  <script src="jquery.min.js" type="text/javascript"></script>
+  <script src="FlatBlockChart.js" type="text/javascript"></script>
+
+  <style>
+    .chart-container {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: auto;
+      height: 65px;
+      width: auto;
+      overflow-x: scroll;
+      background-color: white;
+    }
+
+    #chart-container-1 {
+      bottom: 0;
+    }
+
+    #chart-container-2 {
+      bottom: 100px;
+    }
+
+    #chart-container-3 {
+      bottom: 200px;
+    }
+
+    .noselect {
+      -webkit-touch-callout: none; /* iOS Safari */
+      -webkit-user-select: none; /* Chrome/Safari/Opera */
+      -khtml-user-select: none; /* Konqueror */
+      -moz-user-select: none; /* Firefox */
+      -ms-user-select: none; /* Internet Explorer/Edge */
+      user-select: none; /* Non-prefixed version, currently not supported by any browser */
+    }
+  </style>
+
+  <script type="text/javascript">
+    jQuery.support.cors = true;
+
+    function init() {
+      var data;
+      $.when(
+        $.getJSON("FlatBlockChart.json", function (json) {
+          data = json;
+        }).fail(function (response) {
+          console.log("server error when loading data:", response);
+        })
+      ).then(function () {
+        var chart_settings_1 = {
+          click: function ($e) {
+            console.log("click", $e.data());
+          },
+          select: function ($e) {
+            console.log("select", $e.data());
+          },
+          data: data["data"],
+          format: data["format"],
+          dataIndexForLabels: 0, // format[0] is for the label of the block
+          dataIndexForValues: 1 // format[1] is for the color of the block
+        };
+        chart_1 = new EdaVizJS.FlatBlockChart("chart-container-1", chart_settings_1);
+
+        var chart_settings_2 = {
+          click: function ($e) {
+            console.log("click", $e.data());
+          },
+          select: function ($e) {
+            console.log("select", $e.data());
+          },
+          data: data["data"],
+          format: data["format"],
+          dataIndexForLabels: 0, // format[0] is for the label of the block
+          dataIndexForValues: 1, // format[1] is for the color of the block
+          useColorQuantiles: true, // use quantile color scale instead of the default linear one
+          colorBin: [1, 2, 4, 8, 16],
+          colorRange: ["#dcdcdc", "#52b947", "#f3ec19", "#f57e20", "#ed1f24", "#991b4f"]
+        };
+        chart_2 = new EdaVizJS.FlatBlockChart("chart-container-2", chart_settings_2);
+
+        var chart_settings_3 = {
+          click: function ($e) {
+            console.log("click", $e.data());
+          },
+          select: function ($e) {
+            console.log("select", $e.data());
+          },
+          data: data["data"],
+          format: data["format"],
+          dataIndexForLabels: 0, // format[0] is for the label of the block
+          dataIndexForValues: 1, // format[1] is for the color of the block
+          dataIndexForHeights: 2, // format[2] is for the height of the block
+          useColorQuantiles: true, // use quantile color scale instead of the default linear one
+          colorBin: [1, 2, 4, 8, 16],
+          colorRange: ["#dcdcdc", "#52b947", "#f3ec19", "#f57e20", "#ed1f24", "#991b4f"],
+          heightBin: [10, 40],
+          heightRange: ["33%", "66%", "100%"]
+        };
+        chart_3 = new EdaVizJS.FlatBlockChart("chart-container-3", chart_settings_3);
+      });
+    }
+
+    $(init);
+  </script>
+</head>
+<div id="chart-container-1" class="noselect chart-container"></div>
+<div id="chart-container-2" class="noselect chart-container"></div>
+<div id="chart-container-3" class="noselect chart-container"></div>
+</body>
+</html>
