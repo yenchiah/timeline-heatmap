@@ -1,6 +1,6 @@
 /*************************************************************************
  * This library is developed by Yen-Chia Hsu
- * Copyright Yen-Chia Hsu. All rights reserved.
+ * Copyright Yen-Chia Hsu.
  * GitHub: https://github.com/yenchiah/flat-block-chart
  * Dependencies: jQuery (http://jquery.com/)
  * Contact: hsu.yenchia@gmail.com
