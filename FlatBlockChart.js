@@ -1,7 +1,7 @@
 /*************************************************************************
  * This library is developed by Yen-Chia Hsu
  * Copyright Yen-Chia Hsu. All rights reserved.
- * GitHub: https://github.com/yenchiah/eda-viz-js
+ * GitHub: https://github.com/yenchiah/flat-block-chart
  * Dependencies: jQuery (http://jquery.com/)
  * Contact: hsu.yenchia@gmail.com
  * License: GNU General Public License v2
@@ -32,11 +32,11 @@
     // (e.g. sometimes we only wants to normalize values for each month or week)
     var data = settings["data"];
 
-    // The format takes any user-specified string
+    // The column names takes any user-specified string
     // This is used for creating data attributes on the DOM element
-    // e.g. if the format is ["label", "color", "height"],
+    // e.g. if the column names is ["label", "color", "height"],
     // for each DOM element, there will be data-label, data-color, and data-height attributes
-    var format = settings["format"];
+    var column_names = settings["columnNames"];
 
     // The column index in the data matrix for showing labels under each block
     var data_index_for_labels = typeof settings["dataIndexForLabels"] == "undefined" ? 0 : settings["dataIndexForLabels"];
@@ -144,8 +144,8 @@
         var height_str = "height:" + height + ";";
         // Add data string
         var data_str = "data-index='" + (i + previous_index) + "' ";
-        for (var j = 0; j < format.length; j++) {
-          data_str += "data-" + format[j] + "='" + pt[j] + "' ";
+        for (var j = 0; j < column_names.length; j++) {
+          data_str += "data-" + column_names[j] + "='" + pt[j] + "' ";
         }
         // Add block
         var style_str = "style='" + color_str + height_str + "' ";
@@ -275,10 +275,10 @@
   //
   // Register to window
   //
-  if (window.EdaVizJS) {
-    window.EdaVizJS.FlatBlockChart = FlatBlockChart;
+  if (window.edaplotjs) {
+    window.edaplotjs.FlatBlockChart = FlatBlockChart;
   } else {
-    window.EdaVizJS = {};
-    window.EdaVizJS.FlatBlockChart = FlatBlockChart;
+    window.edaplotjs = {};
+    window.edaplotjs.FlatBlockChart = FlatBlockChart;
   }
 })();

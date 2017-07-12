@@ -63,11 +63,11 @@
             console.log("select", $e.data());
           },
           data: data["data"],
-          format: data["format"],
-          dataIndexForLabels: 0, // format[0] is for the label of the block
-          dataIndexForValues: 1 // format[1] is for the color of the block
+          columnNames: data["columnNames"],
+          dataIndexForLabels: 0, // columnNames[0] is for the label of the block
+          dataIndexForValues: 1 // columnNames[1] is for the color of the block
         };
-        chart_1 = new EdaVizJS.FlatBlockChart("chart-container-1", chart_settings_1);
+        chart_1 = new edaplotjs.FlatBlockChart("chart-container-1", chart_settings_1);
 
         var chart_settings_2 = {
           click: function ($e) {
@@ -77,14 +77,14 @@
             console.log("select", $e.data());
           },
           data: data["data"],
-          format: data["format"],
-          dataIndexForLabels: 0, // format[0] is for the label of the block
-          dataIndexForValues: 1, // format[1] is for the color of the block
+          columnNames: data["columnNames"],
+          dataIndexForLabels: 0, // columnNames[0] is for the label of the block
+          dataIndexForValues: 1, // columnNames[1] is for the color of the block
           useColorQuantiles: true, // use quantile color scale instead of the default linear one
           colorBin: [1, 2, 4, 8, 16],
           colorRange: ["#dcdcdc", "#52b947", "#f3ec19", "#f57e20", "#ed1f24", "#991b4f"]
         };
-        chart_2 = new EdaVizJS.FlatBlockChart("chart-container-2", chart_settings_2);
+        chart_2 = new edaplotjs.FlatBlockChart("chart-container-2", chart_settings_2);
 
         var chart_settings_3 = {
           click: function ($e) {
@@ -94,17 +94,17 @@
             console.log("select", $e.data());
           },
           data: data["data"],
-          format: data["format"],
-          dataIndexForLabels: 0, // format[0] is for the label of the block
-          dataIndexForValues: 1, // format[1] is for the color of the block
-          dataIndexForHeights: 2, // format[2] is for the height of the block
+          columnNames: data["columnNames"],
+          dataIndexForLabels: 0, // columnNames[0] is for the label of the block
+          dataIndexForValues: 1, // columnNames[1] is for the color of the block
+          dataIndexForHeights: 2, // columnNames[2] is for the height of the block
           useColorQuantiles: true, // use quantile color scale instead of the default linear one
           colorBin: [1, 2, 4, 8, 16],
           colorRange: ["#dcdcdc", "#52b947", "#f3ec19", "#f57e20", "#ed1f24", "#991b4f"],
           heightBin: [10, 40],
           heightRange: ["33%", "66%", "100%"]
         };
-        chart_3 = new EdaVizJS.FlatBlockChart("chart-container-3", chart_settings_3);
+        chart_3 = new edaplotjs.FlatBlockChart("chart-container-3", chart_settings_3);
       });
     }
 
