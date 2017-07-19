@@ -1,5 +1,5 @@
 # edaplotjs.FlatBlockChart
-This JavaScript library produces a discrete timeline chart by using blocks. Each block has label, color, and height attributes in the corresponding DOM element. You can use this chart to represent three different dimensions in the data. It is also possible to store custom dimensions in the DOM elements' data attribute. Please see a demo: https://yenchiah.github.io/flat-block-chart/FlatBlockChart.html. One example that uses this chart is http://smellpgh.org/visualization.
+This JavaScript library is for creating an interactive discrete timeline. Each colored "block" in the timeline represents a time point (e.g. one day). The blocks have differenct labels, colors, and heights (optional), which can encode three different dimensions. It is also possible to store custom dimensions in the DOM elements' data attribute. Please see a demo: https://yenchiah.github.io/flat-block-chart/FlatBlockChart.html. One example that uses this chart is Smell PGH, http://smellpgh.org/visualization. In the example, each block means one day, and the color of the blocks represent the concentration of smell reports in that day.
 
 # Dependencies
 jQuery (necessary, https://jquery.com/)
