@@ -114,11 +114,11 @@ settings["select"] = function ($e) {console.log("click", $e.data());}
 ### selectBlockByIndex(index)
 Each block has the data-index attribute which is created automatically by the chart. you can call this method to select the block by index. For example, if your data is [["00:00", 1, 3, "0000"], ["00:30", 2, 15, "0030"]], two blocks will be created. The first block will have index 0, and you can select this block by calling this function.
 ```JavaScript
-fbchart.selectBlockByIndex(0)
+fbchart.selectBlockByIndex(0);
 ```
 
 ### selectLastBlock()
 You can select the last block by calling this function.
 ```JavaScript
-fbchart.selectLastBlock()
+fbchart.selectLastBlock();
 ```
