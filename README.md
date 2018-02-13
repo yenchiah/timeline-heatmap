@@ -100,13 +100,17 @@ settings["heightRange"] = ["33%", "66%", "100%"];
 ### "click"
 The callback event that will be fired when users click on a block.
 ```JavaScript
-settings["click"] = function ($e) {console.log("click", $e.data());}
+settings["click"] = function ($e) {
+  console.log("click", $e.data());
+};
 ```
 
 ### "select"
 The callback event that will be fired when a block is selected by calling public methods.
 ```JavaScript
-settings["select"] = function ($e) {console.log("click", $e.data());}
+settings["select"] = function ($e) {
+  console.log("click", $e.data());
+};
 ```
 
 # Public Methods
