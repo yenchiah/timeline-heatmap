@@ -22,7 +22,7 @@ var settings = {
   data: [["00:00", 1, 3, "0000"], ["00:30", 2, 15, "0030"]],
   columnNames: ["label", "color", "height", "custom_field"],
   dataIndexForLabels: 0,
-  dataIndexForValues: 1,
+  dataIndexForColors: 1,
   dataIndexForHeights: 2
 };
 fbchart = new edaplotjs.FlatBlockChart(container_id, settings);
