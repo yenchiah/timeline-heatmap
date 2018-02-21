@@ -61,7 +61,7 @@
     var $chart_container = $("#" + chart_container_id);
     var $flat_block_chart_value;
     var $flat_block_chart_label;
-    var $flat_blocks_click_region;
+    var $flat_blocks_click_region = [];
 
     // Parameters
     var flat_block_chart_touched = false;
@@ -84,31 +84,34 @@
       $flat_block_chart_value = $("#" + chart_container_id + " .flat-block-chart-value");
       $flat_block_chart_label = $("#" + chart_container_id + " .flat-block-chart-label");
 
-      plot();
-      addEvents();
+      plot(data);
     }
 
-    function plot() {
+    function plot(block_data) {
+      var current_num_blocks = $flat_blocks_click_region.length;
       // Check if data is 2D or 3D
-      var is_data_matrix_2d = typeof data[0][0] != "object";
+      var is_data_matrix_2d = typeof block_data[0][0] != "object";
       if (is_data_matrix_2d) {
         // The entire 2D data matrix is a batch
-        plotOneBatch(data);
+        plotOneBatch(block_data, block_data.length + current_num_blocks);
       } else {
         // Each 2D matrix in the 3D data matrix is a batch
-        var previous_index = 0;
-        for (var i = 0; i < data.length; i++) {
-          plotOneBatch(data[i], previous_index);
-          previous_index += data[i].length;
+        // We want to add index to the blocks reversely
+        var previous_index = current_num_blocks;
+          for (var i = block_data.length - 1; i >= 0; i--) {
+          previous_index += block_data[i].length;
+          plotOneBatch(block_data[i], previous_index);
         }
       }
+      // Update click regions
+      $flat_blocks_click_region = $flat_block_chart_value.find(".flat-block-click-region");
     }
 
     function plotOneBatch(batch, previous_index) {
-      if (typeof previous_index == "undefined") {
-        previous_index = 0;
-      }
+      var chart_value_elements = [];
+      var chart_label_elements = [];
 
+      // Compute the min and max value of the color values
       if (!use_color_quantiles) {
         // Get all color values
         var color_vals = [];
@@ -138,25 +141,30 @@
         var height = valueToQuantile(height_val, height_bin, height_range);
         var height_str = "height:" + height + ";";
         // Add data string
-        var data_str = "data-index='" + (i + previous_index) + "' ";
+        var data_str = "data-index='" + (previous_index - i - 1) + "' ";
         for (var j = 0; j < column_names.length; j++) {
           data_str += "data-" + column_names[j] + "='" + pt[j] + "' ";
         }
-        // Add block
+        // Create block
         var style_str = "style='" + color_str + height_str + "' ";
-        var block_str = "<div class='flat-block' " + style_str + "></div>";
-        var block_click_region_str = "<div class='flat-block-click-region' " + data_str + "></div>";
-        $flat_block_chart_value.append($("<td>" + block_str + block_click_region_str + "</td>"));
-        // Add label
-        var label = pt[data_index_for_labels];
-        $flat_block_chart_label.append($("<td>" + label + "</td>"));
+        var $block = $("<div class='flat-block' " + style_str + "></div>");
+        var $block_click_region = $("<div class='flat-block-click-region' " + data_str + "></div>");
+        var $block_container = $("<td></td>");
+        $block_container.append($block);
+        $block_container.append($block_click_region);
+        addEvents($block_click_region);
+        // Create label
+        var $label = $("<td>" + pt[data_index_for_labels] + "</td>");
+        // Add to collections
+        chart_value_elements.push($block_container);
+        chart_label_elements.push($label);
       }
+      $flat_block_chart_value.prepend(chart_value_elements);
+      $flat_block_chart_label.prepend(chart_label_elements);
     }
 
-    function addEvents() {
-      $flat_blocks_click_region = $flat_block_chart_value.find(".flat-block-click-region");
-
-      $flat_blocks_click_region.on("click touchend", function (e) {
+    function addEvents($block_click_region) {
+      $block_click_region.on("click touchend", function (e) {
         if (e.type == "click") flat_block_chart_touched = true;
         if (flat_block_chart_touched) {
           var $this = $(this);
@@ -167,12 +175,12 @@
         }
       });
 
-      $flat_blocks_click_region.on('touchstart', function (e) {
+      $block_click_region.on('touchstart', function (e) {
         flat_block_chart_touched_position = {x: e.originalEvent.touches[0].pageX, y: e.originalEvent.touches[0].pageY};
         flat_block_chart_touched = true;
       });
 
-      $flat_blocks_click_region.on('touchmove', function (e) {
+      $block_click_region.on('touchmove', function (e) {
         if (Math.abs(flat_block_chart_touched_position.x - e.originalEvent.touches[0].pageX) >= 2 || Math.abs(flat_block_chart_touched_position.y - e.originalEvent.touches[0].pageY) >= 2) {
           flat_block_chart_touched = false;
         }
@@ -255,9 +263,14 @@
     this.selectBlockByIndex = selectBlockByIndex;
 
     var selectLastBlock = function () {
-      selectBlockByIndex($flat_blocks_click_region.length - 1);
+      selectBlockByIndex(0);
     };
     this.selectLastBlock = selectLastBlock;
+
+    var prependBlocks = function (block_data) {
+      plot(block_data);
+    };
+    this.prependBlocks = prependBlocks;
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //
