@@ -19,7 +19,7 @@ To create the chart, pass in the DOM container id and settings:
 ```JavaScript
 var container_id = "chart-container";
 var settings = {
-  data: [["00:00", 1, 3, "0000"], ["00:30", 2, 15, "0030"]],
+  data: [["Mar 01", 1, 3, "03/01/2018"], ["Mar 02", 2, 15, "03/02/2018"]],
   columnNames: ["label", "color", "height", "custom_field"],
   dataIndexForLabels: 0,
   dataIndexForColors: 1,
@@ -35,13 +35,13 @@ The following sections show parameters that you can specify in "settings" and th
 The data can be a 2D or 3D matrix, see the "data" field in FlatBlockChart.json for an example.
 1. If the data matrix is 2D, values will be normalized based on the entire matrix. Columns are variables, and rows are observations. The chart will map the entire color column in the matrix to color codes, and will map the entire height column in the matrix to height of the blocks. <br>
 ```JavaScript
-settings["data"] = [["00:00", 1, 3, "0000"], ["00:30", 2, 15, "0030"]];
+settings["data"] = [["Mar 01", 1, 3, "03/01/2018"], ["Mar 02", 2, 15, "03/02/2018"]];
 ```
 2. If the data matrix is 3D, values will be normalized based on each 2D matrix. This allows normalizing values separately (e.g. each 2D matrix represents data in a day). For each 2D matrix, the chart will map its color column to color codes, and will map its height column to height of the blocks. <br>
 ```JavaScript
 settings["data"] = [
-  [["00:00", 1, 3, "0000"], ["00:30", 2, 15, "0030"]],
-  [["00:00", 5, 32, "0000"], ["00:30", 4, 55, "0030"]]
+  [["Mar 01", 1, 3, "03/01/2018"], ["Mar 02", 2, 15, "03/02/2018"]],
+  [["Apr 01", 5, 32, "04/01/2018"], ["Apr 02", 4, 55, "04/02/2018"]]
 ];
 ```
 
