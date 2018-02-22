@@ -34,10 +34,10 @@
     var column_names = settings["columnNames"];
 
     // The column index in the data matrix for showing labels under each block
-    var data_index_for_labels = typeof settings["dataIndexForLabels"] == "undefined" ? 0 : settings["dataIndexForLabels"];
+    var data_index_for_labels = typeof settings["dataIndexForLabels"] === "undefined" ? 0 : settings["dataIndexForLabels"];
 
     // The column index in the data matrix for coding the color of each block
-    var data_index_for_colors = typeof settings["dataIndexForColors"] == "undefined" ? 1 : settings["dataIndexForColors"];
+    var data_index_for_colors = typeof settings["dataIndexForColors"] === "undefined" ? 1 : settings["dataIndexForColors"];
 
     // The column index in the data matrix for coding the height of each block (optional field)
     var data_index_for_heights = settings["dataIndexForHeights"];
@@ -49,19 +49,25 @@
     var select_event_callback = settings["select"];
 
     // The bin and range of the color that will be used to render the blocks
-    var use_color_quantiles = typeof settings["useColorQuantiles"] == "undefined" ? false : settings["useColorQuantiles"];
-    var color_bin = typeof settings["colorBin"] == "undefined" ? [1, 2, 2.5, 3, 3.5] : settings["colorBin"];
-    var color_range = typeof settings["colorRange"] == "undefined" ? ["#dcdcdc", "#52b947", "#f3ec19", "#f57e20", "#ed1f24", "#991b4f"] : settings["colorRange"];
+    var use_color_quantiles = typeof settings["useColorQuantiles"] === "undefined" ? false : settings["useColorQuantiles"];
+    var color_bin = typeof settings["colorBin"] === "undefined" ? [1, 2, 2.5, 3, 3.5] : settings["colorBin"];
+    var color_range = typeof settings["colorRange"] === "undefined" ? ["#dcdcdc", "#52b947", "#f3ec19", "#f57e20", "#ed1f24", "#991b4f"] : settings["colorRange"];
 
     // The bin and range of the height that will be used to render the blocks
-    var height_bin = typeof settings["heightBin"] == "undefined" ? [10, 20] : settings["heightBin"];
-    var height_range = typeof settings["heightRange"] == "undefined" ? ["33%", "66%", "100%"] : settings["heightRange"];
+    var height_bin = typeof settings["heightBin"] === "undefined" ? [10, 20] : settings["heightBin"];
+    var height_range = typeof settings["heightRange"] === "undefined" ? ["33%", "66%", "100%"] : settings["heightRange"];
+
+    // Add an arrow of the left on the timeline for appending new data
+    // If this setting is a function, when it is clicked, the function will be triggered
+    var add_left_arrow = typeof settings["addLeftArrow"] === "undefined" ? false : settings["addLeftArrow"];
 
     // Cache DOM elements
     var $chart_container = $("#" + chart_container_id);
     var $flat_block_chart_value;
     var $flat_block_chart_label;
     var $flat_blocks_click_region = [];
+    var $arrow_block_container;
+    var $arrow_label;
 
     // Parameters
     var flat_block_chart_touched = false;
@@ -84,7 +90,35 @@
       $flat_block_chart_value = $("#" + chart_container_id + " .flat-block-chart-value");
       $flat_block_chart_label = $("#" + chart_container_id + " .flat-block-chart-label");
 
+      // Plot the timeline
       plot(data);
+
+      // Add the left arrow on the timeline
+      if (add_left_arrow) {
+        setLeftArrow();
+      }
+    }
+
+    function setLeftArrow() {
+      if (typeof $arrow_block_container === "undefined" && typeof $arrow_label === "undefined") {
+        // Add block
+        $arrow_block_container = $("<td></td>");
+        var $arrow_block = $("<div class='flat-block left-arrow'></div>");
+        var $arrow_block_click_region = $("<div class='flat-block-click-region'></div>");
+        $arrow_block_container.append($arrow_block);
+        $arrow_block_container.append($arrow_block_click_region);
+        if (typeof add_left_arrow === "function") {
+          $arrow_block_click_region.on("click touchend", function (e) {
+            add_left_arrow();
+          });
+        }
+        // Add label
+        $arrow_label = $("<td></td>");
+      }
+      // Move block
+      $flat_block_chart_value.prepend($arrow_block_container);
+      // Move label
+      $flat_block_chart_label.prepend($arrow_label);
     }
 
     function plot(block_data) {
@@ -97,8 +131,9 @@
       } else {
         // Each 2D matrix in the 3D data matrix is a batch
         // We want to add index to the blocks reversely
+        // The right-most block has index 0
         var previous_index = current_num_blocks;
-          for (var i = block_data.length - 1; i >= 0; i--) {
+        for (var i = block_data.length - 1; i >= 0; i--) {
           previous_index += block_data[i].length;
           plotOneBatch(block_data[i], previous_index);
         }
@@ -118,7 +153,7 @@
         for (var i = 0; i < batch.length; i++) {
           color_vals.push(batch[i][data_index_for_colors])
         }
-        var color_vals = powerTransform(color_vals);
+        color_vals = powerTransform(color_vals);
         var max_color_val = Math.max.apply(null, color_vals);
         var min_color_val = Math.min.apply(null, color_vals);
       }
@@ -219,12 +254,6 @@
       }
     }
 
-    function clearBlockSelection() {
-      if ($flat_blocks_click_region.hasClass(selected_block_class)) {
-        $flat_blocks_click_region.removeClass(selected_block_class);
-      }
-    }
-
     function powerTransform(values) {
       // Compute geometric mean
       var values_new = [];
@@ -257,6 +286,13 @@
     //
     // Privileged methods
     //
+    var clearBlockSelection = function () {
+      if ($flat_blocks_click_region.hasClass(selected_block_class)) {
+        $flat_blocks_click_region.removeClass(selected_block_class);
+      }
+    };
+    this.clearBlockSelection = clearBlockSelection;
+
     var selectBlockByIndex = function (index) {
       selectBlock($($flat_blocks_click_region.filter("div[data-index=" + index + "]")[0]), true);
     };
@@ -269,6 +305,9 @@
 
     var prependBlocks = function (block_data) {
       plot(block_data);
+      if (add_left_arrow) {
+        setLeftArrow();
+      }
     };
     this.prependBlocks = prependBlocks;
 
