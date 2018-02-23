@@ -60,6 +60,7 @@
     // Add an arrow of the left on the timeline for appending new data
     // If this setting is a function, when it is clicked, the function will be triggered
     var add_left_arrow = typeof settings["addLeftArrow"] === "undefined" ? false : settings["addLeftArrow"];
+    var left_arrow_label = typeof settings["leftArrowLabel"] === "undefined" ? "" : settings["leftArrowLabel"];
 
     // Cache DOM elements
     var $chart_container = $("#" + chart_container_id);
@@ -113,7 +114,7 @@
           });
         }
         // Add label
-        $arrow_label = $("<td></td>");
+        $arrow_label = $("<td>" + left_arrow_label + "</td>");
       }
       // Move block
       $flat_block_chart_value.prepend($arrow_block_container);
@@ -310,6 +311,18 @@
       }
     };
     this.prependBlocks = prependBlocks;
+
+    var setData = function (desired_data) {
+    };
+    this.setData = setData;
+
+    var getCurrentSelectedIndex = function () {
+    };
+    this.getCurrentSelectedIndex = getCurrentSelectedIndex;
+
+    var getCurrentSelectedBlock = function () {
+    };
+    this.getCurrentSelectedBlock = getCurrentSelectedBlock;
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //

@@ -71,6 +71,15 @@
   background-color: rgba(0, 0, 0, 0.3);
 }
 
-.flat-block-chart .left-arrow {
-  box-shadow: 0px 0px 0px 5px rgba(150, 150, 150, 1)  inset;
+.flat-block-chart .flat-block.left-arrow:after {
+  position: absolute;
+  top: 50%;
+  right: 50%;
+  transform: translate(50%, -50%);
+  content: '';
+  width: 0;
+  height: 0;
+  border-top: 20px solid transparent;
+  border-bottom: 20px solid transparent;
+  border-right: 15px solid #888888;
 }
