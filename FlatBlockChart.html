@@ -21,28 +21,37 @@
       background-color: white;
     }
 
+    #chart-1-update-data-btn {
+      bottom: 5px;
+      left: 5px;
+      position: absolute;
+      width: 150px;
+      height: 30px;
+      cursor: pointer;
+    }
+
     #chart-container-1 {
-      bottom: 0;
+      bottom: 50px;
     }
 
     #chart-container-2 {
-      bottom: 100px;
+      bottom: 150px;
     }
 
     #chart-container-3 {
-      bottom: 200px;
+      bottom: 250px;
     }
 
     #chart-container-4 {
-      bottom: 300px;
+      bottom: 350px;
     }
 
     #chart-container-5 {
-      bottom: 400px;
+      bottom: 450px;
     }
 
     #chart-container-6 {
-      bottom: 500px;
+      bottom: 550px;
     }
 
     .noselect {
@@ -60,6 +69,7 @@
 
     function init() {
       var data1, data2;
+      var data_flag = 1;
       $.when(
         $.getJSON("FlatBlockChartData1.json", function (json) {
           data1 = json;
@@ -80,28 +90,37 @@
           select: function ($e) {
             console.log("select", $e.data());
           },
+          complete: function () {
+            console.log("complete");
+          },
           data: data1["data"],
           columnNames: data1["columnNames"],
           dataIndexForLabels: 0, // columnNames[0] is used for the label of the block
           dataIndexForColors: 1, // columnNames[1] is used for the color of the block
           addLeftArrow: function () {
+            var n = chart_1.getNumberOfBlocks();
             console.log("Add new data");
             chart_1.prependBlocks(data2["data"]);
             chart_1.clearBlockSelection();
-            chart_1.selectBlockByIndex(36);
+            chart_1.selectBlockByIndex(n);
+            console.log(chart_1.getSelectedBlockData());
+            console.log(chart_1.getSelectedBlock());
           },
           leftArrowLabel: "More"
         };
         chart_1 = new edaplotjs.FlatBlockChart("chart-container-1", chart_settings_1);
+        $("#chart-1-update-data-btn").on("click", function () {
+          if (data_flag == 1) {
+            chart_1.updateBlocks(data2["data"]);
+            data_flag = 2;
+          } else {
+            chart_1.updateBlocks(data1["data"]);
+            data_flag = 1;
+          }
+        });
 
         // 3D data with color
         var chart_settings_2 = {
-          click: function ($e) {
-            console.log("click", $e.data());
-          },
-          select: function ($e) {
-            console.log("select", $e.data());
-          },
           data: data1["data"],
           columnNames: data1["columnNames"],
           dataIndexForLabels: 0, // columnNames[0] is used for the label of the block
@@ -114,12 +133,6 @@
 
         // 3D data with color and height
         var chart_settings_3 = {
-          click: function ($e) {
-            console.log("click", $e.data());
-          },
-          select: function ($e) {
-            console.log("select", $e.data());
-          },
           data: data1["data"],
           columnNames: data1["columnNames"],
           dataIndexForLabels: 0, // columnNames[0] is used for the label of the block
@@ -136,17 +149,11 @@
 
         // 2D data with gray-scale color
         var chart_settings_4 = {
-          click: function ($e) {
-            console.log("click", $e.data());
-          },
-          select: function ($e) {
-            console.log("select", $e.data());
-          },
           data: data2["data"],
           columnNames: data2["columnNames"],
           dataIndexForLabels: 0, // columnNames[0] is used for the label of the block
           dataIndexForColors: 1, // columnNames[1] is used for the color of the block
-          addLeftArrow: function() {
+          addLeftArrow: function () {
             console.log("Left arrow clicked");
           }
         };
@@ -154,12 +161,6 @@
 
         // 2D data with color
         var chart_settings_5 = {
-          click: function ($e) {
-            console.log("click", $e.data());
-          },
-          select: function ($e) {
-            console.log("select", $e.data());
-          },
           data: data2["data"],
           columnNames: data2["columnNames"],
           dataIndexForLabels: 0, // columnNames[0] is used for the label of the block
@@ -172,12 +173,6 @@
 
         // 2D data with color and height
         var chart_settings_6 = {
-          click: function ($e) {
-            console.log("click", $e.data());
-          },
-          select: function ($e) {
-            console.log("select", $e.data());
-          },
           data: data2["data"],
           columnNames: data2["columnNames"],
           dataIndexForLabels: 0, // columnNames[0] is used for the label of the block
@@ -197,6 +192,7 @@
     $(init);
   </script>
 </head>
+<button id="chart-1-update-data-btn">Update Chart Data</button>
 <div id="chart-container-1" class="noselect chart-container"></div>
 <div id="chart-container-2" class="noselect chart-container"></div>
 <div id="chart-container-3" class="noselect chart-container"></div>

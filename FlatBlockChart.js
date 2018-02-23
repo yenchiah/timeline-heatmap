@@ -48,6 +48,9 @@
     // The callback event that will be fired when a block is selected
     var select_event_callback = settings["select"];
 
+    // The callback event that will be fired when all blocks are rendered
+    var complete_event_callback = settings["complete"];
+
     // The bin and range of the color that will be used to render the blocks
     var use_color_quantiles = typeof settings["useColorQuantiles"] === "undefined" ? false : settings["useColorQuantiles"];
     var color_bin = typeof settings["colorBin"] === "undefined" ? [1, 2, 2.5, 3, 3.5] : settings["colorBin"];
@@ -93,11 +96,6 @@
 
       // Plot the timeline
       plot(data);
-
-      // Add the left arrow on the timeline
-      if (add_left_arrow) {
-        setLeftArrow();
-      }
     }
 
     function setLeftArrow() {
@@ -116,14 +114,17 @@
         // Add label
         $arrow_label = $("<td>" + left_arrow_label + "</td>");
       }
+
       // Move block
       $flat_block_chart_value.prepend($arrow_block_container);
+
       // Move label
       $flat_block_chart_label.prepend($arrow_label);
     }
 
     function plot(block_data) {
-      var current_num_blocks = $flat_blocks_click_region.length;
+      var current_num_blocks = getNumberOfBlocks();
+
       // Check if data is 2D or 3D
       var is_data_matrix_2d = typeof block_data[0][0] != "object";
       if (is_data_matrix_2d) {
@@ -139,8 +140,19 @@
           plotOneBatch(block_data[i], previous_index);
         }
       }
+
       // Update click regions
       $flat_blocks_click_region = $flat_block_chart_value.find(".flat-block-click-region");
+
+      // Add the left arrow on the timeline
+      if (add_left_arrow) {
+        setLeftArrow();
+      }
+
+      // Callback event
+      if (typeof (complete_event_callback) === "function") {
+        complete_event_callback();
+      }
     }
 
     function plotOneBatch(batch, previous_index) {
@@ -205,7 +217,8 @@
         if (flat_block_chart_touched) {
           var $this = $(this);
           selectBlock($this, false);
-          if (typeof (click_event_callback) == "function") {
+          // Callback event
+          if (typeof (click_event_callback) === "function") {
             click_event_callback($this);
           }
         }
@@ -249,7 +262,8 @@
         if (auto_scroll) {
           $chart_container.scrollLeft(Math.round($ele.parent().position().left - $chart_container.width() / 5));
         }
-        if (typeof (select_event_callback) == "function") {
+        // Callback event
+        if (typeof (select_event_callback) === "function") {
           select_event_callback($ele);
         }
       }
@@ -283,6 +297,13 @@
       return values_new;
     }
 
+    function removeBlocks() {
+      $flat_block_chart_value.empty();
+      $flat_block_chart_label.empty();
+      $arrow_block_container = undefined;
+      $arrow_label = undefined;
+    }
+
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //
     // Privileged methods
@@ -306,23 +327,30 @@
 
     var prependBlocks = function (block_data) {
       plot(block_data);
-      if (add_left_arrow) {
-        setLeftArrow();
-      }
     };
     this.prependBlocks = prependBlocks;
 
-    var setData = function (desired_data) {
+    var updateBlocks = function (block_data) {
+      removeBlocks();
+      plot(block_data);
     };
-    this.setData = setData;
+    this.updateBlocks = updateBlocks;
 
-    var getCurrentSelectedIndex = function () {
+    var getSelectedBlockData = function () {
+      var $selected = getSelectedBlock();
+      return $selected.data();
     };
-    this.getCurrentSelectedIndex = getCurrentSelectedIndex;
+    this.getSelectedBlockData = getSelectedBlockData;
 
-    var getCurrentSelectedBlock = function () {
+    var getSelectedBlock = function () {
+      return $chart_container.find("." + selected_block_class);
     };
-    this.getCurrentSelectedBlock = getCurrentSelectedBlock;
+    this.getSelectedBlock = getSelectedBlock;
+
+    var getNumberOfBlocks = function () {
+      return $flat_blocks_click_region.length;
+    };
+    this.getNumberOfBlocks = getNumberOfBlocks;
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //
