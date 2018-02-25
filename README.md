@@ -98,31 +98,65 @@ settings["heightRange"] = ["33%", "66%", "100%"];
 ```
 
 ### "click"
-The callback event that will be fired when users click on a block.
+The callback event when users click on a block.
 ```JavaScript
-settings["click"] = function ($e) {
-  console.log("click", $e.data());
+settings["click"] = function ($e, obj) {
+  console.log("click", $e.data(), obj);
 };
 ```
 
 ### "select"
-The callback event that will be fired when a block is selected by calling public methods.
+The callback event when a block is selected after calling public methods.
 ```JavaScript
-settings["select"] = function ($e) {
-  console.log("click", $e.data());
+settings["select"] = function ($e, obj) {
+  console.log("click", $e.data(), obj);
 };
+```
+
+### "create"
+The callback event when the chart is created.
+```JavaScript
+settings["create"] = function (obj) {
+  console.log("create", obj);
+};
+```
+
+### "update"
+The callback event when the chart is updated after calling prependBlocks() and updateBlocks().
+```JavaScript
+settings["update"] = function (obj) {
+  console.log("update", obj);
+};
+```
+
+### "addLeftArrow"
+Add an arrow on the left of the timeline for appending new data. If this setting is a function, when the arrow is clicked, the function will be triggered.
+```JavaScript
+settings["addLeftArrow"] = function (obj) {
+  console.log("Add new data");
+  var n = obj.getNumberOfBlocks();
+  obj.prependBlocks([["Mar 03", 9, 2, "03/03/2018"], ["Mar 04", 14, 2, "03/04/2018"]]);
+  obj.clearBlockSelection();
+  obj.selectBlockByIndex(n);
+};
+```
+
+### "leftArrowLabel"
+The text on the bottom of the arrow.
+```JavaScript
+settings["leftArrowLabel"] = "More";
 ```
 
 # Public Methods
 
 ### selectBlockByIndex(index)
-Each block has the data-index attribute which is created automatically by the chart. you can call this method to select the block by index. For example, if your data is [["00:00", 1, 3, "0000"], ["00:30", 2, 15, "0030"]], two blocks will be created. The first block will have index 0, and you can select this block by calling this function.
+Each block has the data-index attribute which is created automatically by the chart. you can call this method to select the block by index. For example, if your data is [["Mar 01", 1, 3, "03/01/2018"], ["Mar 02", 2, 15, "03/02/2018"]], two blocks will be created. The last block will have index 0, and you can select this block by calling this function.
 ```JavaScript
 fbchart.selectBlockByIndex(0);
 ```
 
 ### selectLastBlock()
-You can select the last block by calling this function.
+Select the last block (right-most block).
 ```JavaScript
 fbchart.selectLastBlock();
 ```
