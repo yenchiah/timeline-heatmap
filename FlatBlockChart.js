@@ -48,8 +48,11 @@
     // The callback event that will be fired when a block is selected
     var select_event_callback = settings["select"];
 
-    // The callback event that will be fired when all blocks are rendered
-    var complete_event_callback = settings["complete"];
+    // The callback event that will be fired when blocks are updated (prepend or update)
+    var update_event_callback = settings["update"];
+
+    // The callback event that will be fired when the chart is created for the first time
+    var create_event_callback = settings["create"];
 
     // The bin and range of the color that will be used to render the blocks
     var use_color_quantiles = typeof settings["useColorQuantiles"] === "undefined" ? false : settings["useColorQuantiles"];
@@ -77,6 +80,7 @@
     var flat_block_chart_touched = false;
     var flat_block_chart_touched_position = {};
     var selected_block_class = use_color_quantiles ? "selected-block-no-color" : "selected-block";
+    var this_obj = this;
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //
@@ -96,19 +100,24 @@
 
       // Plot the timeline
       plot(data);
+
+      // Callback event
+      if (typeof (create_event_callback) === "function") {
+        create_event_callback(this_obj);
+      }
     }
 
     function setLeftArrow() {
       if (typeof $arrow_block_container === "undefined" && typeof $arrow_label === "undefined") {
         // Add block
         $arrow_block_container = $("<td></td>");
-        var $arrow_block = $("<div class='flat-block left-arrow'></div>");
-        var $arrow_block_click_region = $("<div class='flat-block-click-region'></div>");
+        var $arrow_block = $("<div class='left-arrow'></div>");
+        var $arrow_block_click_region = $("<div class='left-arrow-click-region'></div>");
         $arrow_block_container.append($arrow_block);
         $arrow_block_container.append($arrow_block_click_region);
         if (typeof add_left_arrow === "function") {
-          $arrow_block_click_region.on("click touchend", function (e) {
-            add_left_arrow();
+          $arrow_block_click_region.on("click touchend", function () {
+            add_left_arrow(this_obj);
           });
         }
         // Add label
@@ -147,11 +156,6 @@
       // Add the left arrow on the timeline
       if (add_left_arrow) {
         setLeftArrow();
-      }
-
-      // Callback event
-      if (typeof (complete_event_callback) === "function") {
-        complete_event_callback();
       }
     }
 
@@ -219,7 +223,7 @@
           selectBlock($this, false);
           // Callback event
           if (typeof (click_event_callback) === "function") {
-            click_event_callback($this);
+            click_event_callback($this, this_obj);
           }
         }
       });
@@ -264,7 +268,7 @@
         }
         // Callback event
         if (typeof (select_event_callback) === "function") {
-          select_event_callback($ele);
+          select_event_callback($ele, this_obj);
         }
       }
     }
@@ -327,12 +331,20 @@
 
     var prependBlocks = function (block_data) {
       plot(block_data);
+      // Callback event
+      if (typeof (update_event_callback) === "function") {
+        update_event_callback(this_obj);
+      }
     };
     this.prependBlocks = prependBlocks;
 
     var updateBlocks = function (block_data) {
       removeBlocks();
       plot(block_data);
+      // Callback event
+      if (typeof (update_event_callback) === "function") {
+        update_event_callback(this_obj);
+      }
     };
     this.updateBlocks = updateBlocks;
 
@@ -351,6 +363,11 @@
       return $flat_blocks_click_region.length;
     };
     this.getNumberOfBlocks = getNumberOfBlocks;
+
+    var selectFirstBlock = function () {
+      selectBlockByIndex(getNumberOfBlocks() - 1);
+    };
+    this.selectFirstBlock = selectFirstBlock;
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //
