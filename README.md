@@ -150,7 +150,7 @@ settings["leftArrowLabel"] = "More";
 # Public Methods
 
 ### selectBlockByIndex(index)
-Each block has the data-index attribute which is created automatically by the chart. you can call this method to select the block by index. For example, if your data is [["Mar 01", 1, 3, "03/01/2018"], ["Mar 02", 2, 15, "03/02/2018"]], two blocks will be created. Notice that the index of the last block will always be 0. The index of the first block will be the length of all blocks minus one.
+Each block has the data-index attribute which is created automatically by the chart. you can call this method to select the block by index. For example, if your data is [["Mar 01", 1, 3, "03/01/2018"], ["Mar 02", 2, 15, "03/02/2018"]], two blocks will be created. Notice that the index is reversed. The index of the last block will always be 0. The index of the first block will be the length of all blocks minus one.
 ```JavaScript
 fbchart.selectBlockByIndex(5);
 ```
