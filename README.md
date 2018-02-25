@@ -150,13 +150,57 @@ settings["leftArrowLabel"] = "More";
 # Public Methods
 
 ### selectBlockByIndex(index)
-Each block has the data-index attribute which is created automatically by the chart. you can call this method to select the block by index. For example, if your data is [["Mar 01", 1, 3, "03/01/2018"], ["Mar 02", 2, 15, "03/02/2018"]], two blocks will be created. The last block will have index 0, and you can select this block by calling this function.
+Each block has the data-index attribute which is created automatically by the chart. you can call this method to select the block by index. For example, if your data is [["Mar 01", 1, 3, "03/01/2018"], ["Mar 02", 2, 15, "03/02/2018"]], two blocks will be created. Notice that the index of the last block will always be 0. The index of the first block will be the length of all blocks minus one.
 ```JavaScript
-fbchart.selectBlockByIndex(0);
+fbchart.selectBlockByIndex(5);
 ```
 
 ### selectLastBlock()
-Select the last block (right-most block).
+Select the last block (the right-most block).
 ```JavaScript
 fbchart.selectLastBlock();
+```
+
+### clearBlockSelection()
+Mark the selected block as not selected and reset its style.
+```JavaScript
+fbchart.clearBlockSelection();
+```
+
+### prependBlocks(data)
+Prepend blocks to the left of the timeline.
+```JavaScript
+var data = [["Mar 03", 9, 2, "03/03/2018"], ["Mar 04", 14, 2, "03/04/2018"]];
+fbchart.prependBlocks(data);
+```
+
+### updateBlocks(data)
+Remove all current blocks and create a new set of blocks.
+```JavaScript
+var data = [["Mar 03", 9, 2, "03/03/2018"], ["Mar 04", 14, 2, "03/04/2018"]];
+fbchart.updateBlocks(data);
+```
+
+### getSelectedBlockData()
+Get the data of the current selected block.
+```JavaScript
+fbchart.getSelectedBlockData();
+```
+
+### getSelectedBlock()
+Get the jQuery DOM element of the current selected block.
+```JavaScript
+fbchart.getSelectedBlock();
+```
+
+### getNumberOfBlocks()
+Get the current number of blocks.
+```JavaScript
+fbchart.getNumberOfBlocks();
+```
+
+### selectFirstBlock()
+Select the first block (the left-most block).
+```JavaScript
+fbchart.selectFirstBlock();
 ```
