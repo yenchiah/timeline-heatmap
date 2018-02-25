@@ -63,8 +63,8 @@
     var height_bin = typeof settings["heightBin"] === "undefined" ? [10, 20] : settings["heightBin"];
     var height_range = typeof settings["heightRange"] === "undefined" ? ["33%", "66%", "100%"] : settings["heightRange"];
 
-    // Add an arrow of the left on the timeline for appending new data
-    // If this setting is a function, when it is clicked, the function will be triggered
+    // Add an arrow on the left of the timeline for appending new data
+    // If this setting is a function, when the arrow is clicked, the function will be triggered
     var add_left_arrow = typeof settings["addLeftArrow"] === "undefined" ? false : settings["addLeftArrow"];
     var left_arrow_label = typeof settings["leftArrowLabel"] === "undefined" ? "" : settings["leftArrowLabel"];
 
