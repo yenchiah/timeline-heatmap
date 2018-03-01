@@ -121,14 +121,6 @@ settings["create"] = function (obj) {
 };
 ```
 
-### "update"
-The callback event when the chart is updated after calling prependBlocks() and updateBlocks().
-```JavaScript
-settings["update"] = function (obj) {
-  console.log("update", obj);
-};
-```
-
 ### "addLeftArrow"
 Add an arrow on the left of the timeline for appending new data. If this setting is a function, when the arrow is clicked, the function will be triggered.
 ```JavaScript
@@ -149,6 +141,12 @@ settings["leftArrowLabel"] = "More";
 
 # Public Methods
 
+### clearBlockSelection()
+Mark the selected block as not selected and reset its style.
+```JavaScript
+fbchart.clearBlockSelection();
+```
+
 ### selectBlockByIndex(index)
 Each block has the data-index attribute which is created automatically by the chart. you can call this method to select the block by index. For example, if your data is [["Mar 01", 1, 3, "03/01/2018"], ["Mar 02", 2, 15, "03/02/2018"]], two blocks will be created. Notice that the index is reversed. The index of the last block will always be 0. The index of the first block will be the length of all blocks minus one.
 ```JavaScript
@@ -159,12 +157,6 @@ fbchart.selectBlockByIndex(5);
 Select the last block (the right-most block).
 ```JavaScript
 fbchart.selectLastBlock();
-```
-
-### clearBlockSelection()
-Mark the selected block as not selected and reset its style.
-```JavaScript
-fbchart.clearBlockSelection();
 ```
 
 ### prependBlocks(data)
@@ -203,4 +195,34 @@ fbchart.getNumberOfBlocks();
 Select the first block (the left-most block).
 ```JavaScript
 fbchart.selectFirstBlock();
+```
+
+### getBlockDataByIndex(index)
+Use index to get the data for the corresponding block.
+```JavaScript
+fbchart.getBlockDataByIndex(index);
+```
+
+### getFirstBlockData()
+Get the data for the first block (the left-most block).
+```JavaScript
+fbchart.getFirstBlockData();
+```
+
+### getLastBlockData()
+Get the data for the last block (the right-most block).
+```JavaScript
+fbchart.getLastBlockData();
+```
+
+### hideLeftArrow()
+Hide the arrow on the left on the timeline.
+```JavaScript
+fbchart.hideLeftArrow();
+```
+
+### showLeftArrow()
+Show the arrow on the left on the timeline.
+```JavaScript
+fbchart.showLeftArrow();
 ```
