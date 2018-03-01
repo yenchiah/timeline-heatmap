@@ -93,35 +93,42 @@
           create: function (obj) {
             console.log("create", obj);
             obj.selectFirstBlock();
-            $("#chart-1-update-data-btn").on("click", function () {
-              if (data_flag == 1) {
-                obj.updateBlocks(data2["data"]);
-                data_flag = 2;
-              } else {
-                obj.updateBlocks(data1["data"]);
-                data_flag = 1;
-              }
-            });
-          },
-          update: function (obj) {
-            console.log("update", obj);
           },
           data: data1["data"],
           columnNames: data1["columnNames"],
           dataIndexForLabels: 0, // columnNames[0] is used for the label of the block
           dataIndexForColors: 1, // columnNames[1] is used for the color of the block
           addLeftArrow: function (obj) {
-            var n = obj.getNumberOfBlocks();
             console.log("Add new data");
-            obj.prependBlocks(data2["data"]);
-            obj.clearBlockSelection();
-            obj.selectBlockByIndex(n);
-            console.log(obj.getSelectedBlockData());
-            console.log(obj.getSelectedBlock());
+            var date_str = obj.getFirstBlockData()["custom_field"];
+            obj.hideLeftArrow();
+            // Simulate ajax calls
+            setTimeout(function () {
+              if (date_str == "03/01/2018") {
+                obj.prependBlocks(data2["data"]);
+              } else {
+                obj.prependBlocks(data1["data"]);
+              }
+              obj.selectFirstBlock();
+              obj.showLeftArrow();
+            }, 1000);
           },
           leftArrowLabel: "More"
         };
         chart_1 = new edaplotjs.FlatBlockChart("chart-container-1", chart_settings_1);
+
+        // Set the button to update chart_1
+        $("#chart-1-update-data-btn").on("click", function () {
+          if (data_flag == 1) {
+            chart_1.updateBlocks(data2["data"]);
+            chart_1.selectFirstBlock();
+            data_flag = 2;
+          } else {
+            chart_1.updateBlocks(data1["data"]);
+            chart_1.selectFirstBlock();
+            data_flag = 1;
+          }
+        });
 
         // 3D data with color
         var chart_settings_2 = {
@@ -155,17 +162,27 @@
 
         // 2D data with gray-scale color
         var chart_settings_4 = {
+          create: function (obj) {
+            obj.selectFirstBlock();
+          },
           data: data2["data"],
           columnNames: data2["columnNames"],
           dataIndexForLabels: 0, // columnNames[0] is used for the label of the block
           dataIndexForColors: 1, // columnNames[1] is used for the color of the block
           addLeftArrow: function (obj) {
             console.log("Add new data");
-            obj.prependBlocks(data1["data"]);
-            obj.clearBlockSelection();
-            obj.selectFirstBlock();
-            console.log(obj.getSelectedBlockData());
-            console.log(obj.getSelectedBlock());
+            var date_str = obj.getFirstBlockData()["custom_field"];
+            obj.hideLeftArrow();
+            // Simulate ajax calls
+            setTimeout(function () {
+              if (date_str == "03/01/2018") {
+                obj.prependBlocks(data2["data"]);
+              } else {
+                obj.prependBlocks(data1["data"]);
+              }
+              obj.selectFirstBlock();
+              obj.showLeftArrow();
+            }, 1000);
           }
         };
         chart_4 = new edaplotjs.FlatBlockChart("chart-container-4", chart_settings_4);
@@ -178,10 +195,7 @@
           dataIndexForColors: 1, // columnNames[1] is used for the color of the block
           useColorQuantiles: true, // use quantile color scale instead of the default linear one
           colorBin: [1, 2, 4, 8, 16],
-          colorRange: ["#dcdcdc", "#52b947", "#f3ec19", "#f57e20", "#ed1f24", "#991b4f"],
-          create: function (obj) {
-            obj.selectFirstBlock();
-          }
+          colorRange: ["#dcdcdc", "#52b947", "#f3ec19", "#f57e20", "#ed1f24", "#991b4f"]
         };
         chart_5 = new edaplotjs.FlatBlockChart("chart-container-5", chart_settings_5);
 
