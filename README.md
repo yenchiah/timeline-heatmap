@@ -226,3 +226,21 @@ Show the arrow on the left on the timeline.
 ```JavaScript
 fbchart.showLeftArrow();
 ```
+
+### setLeftArrowOpacity(opacity)
+Set the opacity of the left arrow and the arrow label.
+```JavaScript
+fbchart.setLeftArrowOpacity(0.5);
+```
+
+### disableLeftArrow()
+Disable the click event of the left arrow.
+```JavaScript
+fbchart.disableLeftArrow();
+```
+
+### enableLeftArrow()
+Enable the click event of the left arrow.
+```JavaScript
+fbchart.enableLeftArrow();
+```
