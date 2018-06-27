@@ -109,7 +109,7 @@ settings["click"] = function ($e, obj) {
 The callback event when a block is selected after calling public methods.
 ```JavaScript
 settings["select"] = function ($e, obj) {
-  console.log("click", $e.data(), obj);
+  console.log("select", $e.data(), obj);
 };
 ```
 
