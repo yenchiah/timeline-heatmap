@@ -146,7 +146,7 @@
           dataIndexForLabels: 0, // columnNames[0] is used for the label of the block
           dataIndexForColors: 1, // columnNames[1] is used for the color of the block
           useColorQuantiles: true, // use quantile color scale instead of the default linear one
-          colorBin: [1, 2, 4, 8, 16],
+          colorBin: [0, 2, 4, 8, 16],
           colorRange: ["#dcdcdc", "#52b947", "#f3ec19", "#f57e20", "#ed1f24", "#991b4f"]
         };
         chart_2 = new edaplotjs.FlatBlockChart("chart-container-2", chart_settings_2);
@@ -159,7 +159,7 @@
           dataIndexForColors: 1, // columnNames[1] is used for the color of the block
           dataIndexForHeights: 2, // columnNames[2] is used for the height of the block
           useColorQuantiles: true, // use quantile color scale instead of the default linear one
-          colorBin: [1, 2, 4, 8, 16],
+          colorBin: [0, 2, 4, 8, 16],
           colorRange: ["#dcdcdc", "#52b947", "#f3ec19", "#f57e20", "#ed1f24", "#991b4f"],
           heightBin: [10, 40],
           heightRange: ["33%", "66%", "100%"],
@@ -203,7 +203,7 @@
           dataIndexForLabels: 0, // columnNames[0] is used for the label of the block
           dataIndexForColors: 1, // columnNames[1] is used for the color of the block
           useColorQuantiles: true, // use quantile color scale instead of the default linear one
-          colorBin: [1, 2, 4, 8, 16],
+          colorBin: [0, 2, 4, 8, 16],
           colorRange: ["#dcdcdc", "#52b947", "#f3ec19", "#f57e20", "#ed1f24", "#991b4f"]
         };
         chart_5 = new edaplotjs.FlatBlockChart("chart-container-5", chart_settings_5);
@@ -216,7 +216,7 @@
           dataIndexForColors: 1, // columnNames[1] is used for the color of the block
           dataIndexForHeights: 2, // columnNames[2] is used for the height of the block
           useColorQuantiles: true, // use quantile color scale instead of the default linear one
-          colorBin: [1, 2, 4, 8, 16],
+          colorBin: [0, 2, 4, 8, 16],
           colorRange: ["#dcdcdc", "#52b947", "#f3ec19", "#f57e20", "#ed1f24", "#991b4f"],
           heightBin: [10, 40],
           heightRange: ["33%", "66%", "100%"],
@@ -226,14 +226,21 @@
         };
         chart_6 = new edaplotjs.FlatBlockChart("chart-container-6", chart_settings_6);
 
-        // 2D data with gray-scale color only
+        // 2D data with binned gray-scale color only
         var chart_settings_7 = {
           data: data3["data"],
           columnNames: data3["columnNames"],
           dataIndexForLabels: 0, // columnNames[0] is used for the label of the block
           dataIndexForColors: 1, // columnNames[1] is used for the color of the block
+          useColorQuantiles: true, // use quantile color scale instead of the default linear one
+          colorBin: [0, 2, 4, 8, 16],
+          colorRange: ["#ffffff", "#52b947", "#f3ec19", "#f57e20", "#ed1f24", "#991b4f"],
+          noEventWhenColorValueZero: true, // do not add event to a block when its color value is zero
           create: function (obj) {
             obj.selectLastBlock();
+          },
+          select: function ($e, obj) {
+            console.log("select", $e.data(), obj);
           }
         };
         chart_7 = new edaplotjs.FlatBlockChart("chart-container-7", chart_settings_7);

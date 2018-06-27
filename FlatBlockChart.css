@@ -1,6 +1,6 @@
 /*************************************************************************
  * GitHub: https://github.com/yenchiah/flat-block-chart
- * Version: v2.2
+ * Version: v2.3
  *************************************************************************/
 
 .flat-block-chart {
@@ -37,7 +37,6 @@
   background-image: none;
   outline: none;
   border-radius: 0;
-  cursor: pointer;
   position: absolute;
   bottom: 0;
   left: 0;
@@ -125,4 +124,8 @@
   border-top: 15px solid transparent;
   border-bottom: 15px solid transparent;
   border-right: 15px solid #888888;
+}
+
+.cursor-default {
+  cursor: default !important;
 }

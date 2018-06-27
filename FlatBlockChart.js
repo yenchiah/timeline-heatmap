@@ -1,6 +1,6 @@
 /*************************************************************************
  * GitHub: https://github.com/yenchiah/flat-block-chart
- * Version: v2.2
+ * Version: v2.3
  *************************************************************************/
 
 (function () {
@@ -64,6 +64,9 @@
     // If this setting is a function, when the arrow is clicked, the function will be triggered
     var add_left_arrow = typeof settings["addLeftArrow"] === "undefined" ? false : settings["addLeftArrow"];
     var left_arrow_label = typeof settings["leftArrowLabel"] === "undefined" ? "" : settings["leftArrowLabel"];
+
+    // Prevent adding events to blocks with color value zero
+    var no_event_when_color_value_zero = typeof settings["noEventWhenColorValueZero"] === "undefined" ? false : settings["noEventWhenColorValueZero"];
 
     // Cache DOM elements
     var $chart_container = $("#" + chart_container_id);
@@ -204,7 +207,12 @@
         var $block_container = $("<td></td>");
         $block_container.append($block);
         $block_container.append($block_click_region);
-        addEvents($block_click_region);
+        if (no_event_when_color_value_zero && color_val == 0) {
+          // Do not add events to the block if its color value is zero and the flag is true
+          $block_click_region.addClass("cursor-default");
+        } else {
+          addEvents($block_click_region);
+        }
         // Create label
         var $label = $("<td>" + pt[data_index_for_labels] + "</td>");
         // Add to collections
