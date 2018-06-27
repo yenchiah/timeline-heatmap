@@ -54,6 +54,10 @@
       bottom: 550px;
     }
 
+    #chart-container-7 {
+      bottom: 650px;
+    }
+
     .noselect {
       -webkit-touch-callout: none; /* iOS Safari */
       -webkit-user-select: none; /* Chrome/Safari/Opera */
@@ -68,7 +72,7 @@
     jQuery.support.cors = true;
 
     function init() {
-      var data1, data2;
+      var data1, data2, data3;
       var data_flag = 1;
       $.when(
         $.getJSON("FlatBlockChartData1.json", function (json) {
@@ -78,6 +82,11 @@
         }),
         $.getJSON("FlatBlockChartData2.json", function (json) {
           data2 = json;
+        }).fail(function (response) {
+          console.log("server error when loading data:", response);
+        }),
+        $.getJSON("FlatBlockChartData3.json", function (json) {
+          data3 = json;
         }).fail(function (response) {
           console.log("server error when loading data:", response);
         })
@@ -216,6 +225,18 @@
           }
         };
         chart_6 = new edaplotjs.FlatBlockChart("chart-container-6", chart_settings_6);
+
+        // 2D data with gray-scale color only
+        var chart_settings_7 = {
+          data: data3["data"],
+          columnNames: data3["columnNames"],
+          dataIndexForLabels: 0, // columnNames[0] is used for the label of the block
+          dataIndexForColors: 1, // columnNames[1] is used for the color of the block
+          create: function (obj) {
+            obj.selectLastBlock();
+          }
+        };
+        chart_7 = new edaplotjs.FlatBlockChart("chart-container-7", chart_settings_7);
       });
     }
 
@@ -229,5 +250,6 @@
 <div id="chart-container-4" class="noselect chart-container"></div>
 <div id="chart-container-5" class="noselect chart-container"></div>
 <div id="chart-container-6" class="noselect chart-container"></div>
+<div id="chart-container-7" class="noselect chart-container"></div>
 </body>
 </html>
