@@ -86,8 +86,14 @@ settings["colorBin"] = [1, 10];
 settings["colorRange"] = ["#dcdcdc", "#52b947", "#f3ec19"];
 ```
 
+### "noEventWhenColorValueZero"
+Prevent adding events to blocks with color value zero.
+```JavaScript
+settings["noEventWhenColorValueZero"] = true // do not add event to a block when its color value is zero
+```
+
 ### "heightBin" and "heightRange"
-The bin and range of the height that will be used to render the blocks
+The bin and range of the height that will be used to render the blocks.
 ```JavaScript
 // For height value h:
 // if h <= 10, set the height of the block to 33% of the total height
