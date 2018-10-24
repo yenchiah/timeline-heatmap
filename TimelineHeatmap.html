@@ -1,13 +1,13 @@
 <!doctype html>
 <html>
 <head>
-  <title>Flat Block Chart</title>
+  <title>Timeline Heatmap</title>
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700,600,300" rel="stylesheet" type="text/css">
   <link href="https://fonts.googleapis.com/css?family=Open+Sans+Condensed:700" rel="stylesheet" type="text/css">
   <link href="https://fonts.googleapis.com/css?family=Raleway:400,500" rel="stylesheet" type="text/css">
-  <link href="FlatBlockChart.css" media="screen" rel="stylesheet" type="text/css"/>
+  <link href="TimelineHeatmap.css" media="screen" rel="stylesheet" type="text/css"/>
   <script src="jquery.min.js" type="text/javascript"></script>
-  <script src="FlatBlockChart.js" type="text/javascript"></script>
+  <script src="TimelineHeatmap.js" type="text/javascript"></script>
 
   <style>
     .chart-container {
@@ -75,17 +75,17 @@
       var data1, data2, data3;
       var data_flag = 1;
       $.when(
-        $.getJSON("FlatBlockChartData1.json", function (json) {
+        $.getJSON("TimelineHeatmapData1.json", function (json) {
           data1 = json;
         }).fail(function (response) {
           console.log("server error when loading data:", response);
         }),
-        $.getJSON("FlatBlockChartData2.json", function (json) {
+        $.getJSON("TimelineHeatmapData2.json", function (json) {
           data2 = json;
         }).fail(function (response) {
           console.log("server error when loading data:", response);
         }),
-        $.getJSON("FlatBlockChartData3.json", function (json) {
+        $.getJSON("TimelineHeatmapData3.json", function (json) {
           data3 = json;
         }).fail(function (response) {
           console.log("server error when loading data:", response);
@@ -124,7 +124,7 @@
           },
           leftArrowLabel: "More"
         };
-        chart_1 = new edaplotjs.FlatBlockChart("chart-container-1", chart_settings_1);
+        chart_1 = new edaplotjs.TimelineHeatmap("chart-container-1", chart_settings_1);
 
         // Set the button to update chart_1
         $("#chart-1-update-data-btn").on("click", function () {
@@ -149,7 +149,7 @@
           colorBin: [0, 2, 4, 8, 16],
           colorRange: ["#dcdcdc", "#52b947", "#f3ec19", "#f57e20", "#ed1f24", "#991b4f"]
         };
-        chart_2 = new edaplotjs.FlatBlockChart("chart-container-2", chart_settings_2);
+        chart_2 = new edaplotjs.TimelineHeatmap("chart-container-2", chart_settings_2);
 
         // 3D data with color and height
         var chart_settings_3 = {
@@ -167,7 +167,7 @@
             obj.selectLastBlock();
           }
         };
-        chart_3 = new edaplotjs.FlatBlockChart("chart-container-3", chart_settings_3);
+        chart_3 = new edaplotjs.TimelineHeatmap("chart-container-3", chart_settings_3);
 
         // 2D data with gray-scale color
         var chart_settings_4 = {
@@ -194,7 +194,7 @@
             }, 1000);
           }
         };
-        chart_4 = new edaplotjs.FlatBlockChart("chart-container-4", chart_settings_4);
+        chart_4 = new edaplotjs.TimelineHeatmap("chart-container-4", chart_settings_4);
 
         // 2D data with color
         var chart_settings_5 = {
@@ -206,7 +206,7 @@
           colorBin: [0, 2, 4, 8, 16],
           colorRange: ["#dcdcdc", "#52b947", "#f3ec19", "#f57e20", "#ed1f24", "#991b4f"]
         };
-        chart_5 = new edaplotjs.FlatBlockChart("chart-container-5", chart_settings_5);
+        chart_5 = new edaplotjs.TimelineHeatmap("chart-container-5", chart_settings_5);
 
         // 2D data with color and height
         var chart_settings_6 = {
@@ -224,7 +224,7 @@
             obj.selectLastBlock();
           }
         };
-        chart_6 = new edaplotjs.FlatBlockChart("chart-container-6", chart_settings_6);
+        chart_6 = new edaplotjs.TimelineHeatmap("chart-container-6", chart_settings_6);
 
         // 2D data with binned gray-scale color only
         var chart_settings_7 = {
@@ -243,7 +243,7 @@
             console.log("select", $e.data(), obj);
           }
         };
-        chart_7 = new edaplotjs.FlatBlockChart("chart-container-7", chart_settings_7);
+        chart_7 = new edaplotjs.TimelineHeatmap("chart-container-7", chart_settings_7);
       });
     }
 
