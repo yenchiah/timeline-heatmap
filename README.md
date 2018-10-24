@@ -1,8 +1,8 @@
-# edaplotjs.FlatBlockChart
+# edaplotjs.TimelineHeatmap
 
-Demo: https://yenchiah.github.io/flat-block-chart/FlatBlockChart.html
+Demo: https://yenchiah.github.io/timeline-heatmap/TimelineHeatmap.html
 
-This JavaScript library is for creating an interactive discrete timeline. Each colored "block" in the timeline represents a time point (e.g. one day). The blocks have differenct labels, colors, and heights (optional), which can encode three different dimensions. It is also possible to store custom dimensions in the DOM elements' data attribute. One example that uses this chart is [Smell PGH](http://smellpgh.org/visualization). In the example, each block means one day, and the color of the blocks represent the concentration of smell reports in that day.
+This JavaScript library is for creating an interactive timeline heatmap. Each colored "block" in the timeline represents a time point (e.g. one day). The blocks have differenct labels, colors, and heights (optional), which can encode three different dimensions. It is also possible to store custom dimensions in the DOM elements' data attribute. One example that uses this chart is [Smell PGH](http://smellpgh.org/visualization). In the example, each block means one day, and the color of the blocks represent the concentration of smell reports in that day.
 
 # Dependencies
 jQuery (necessary, https://jquery.com/)
@@ -10,9 +10,9 @@ jQuery (necessary, https://jquery.com/)
 # Usage
 First, include the following lines in the \<head\> tag of html file:
 ```HTML
-<link href="FlatBlockChart.css" media="screen" rel="stylesheet" type="text/css"/>
+<link href="TimelineHeatmap.css" media="screen" rel="stylesheet" type="text/css"/>
 <script src="jquery.min.js" type="text/javascript"></script>
-<script src="FlatBlockChart.js" type="text/javascript"></script>
+<script src="TimelineHeatmap.js" type="text/javascript"></script>
 ```
 
 To create the chart, pass in the DOM container id and settings:
@@ -25,14 +25,14 @@ var settings = {
   dataIndexForColors: 1,
   dataIndexForHeights: 2
 };
-fbchart = new edaplotjs.FlatBlockChart(container_id, settings);
+fbchart = new edaplotjs.TimelineHeatmap(container_id, settings);
 ```
 The following sections show parameters that you can specify in "settings" and the public methods.
 
 # Settings
 
 ### "data"
-The data can be a 2D or 3D matrix, see the "data" field in FlatBlockChart.json for an example.
+The data can be a 2D or 3D matrix, see the "data" field in "TimelineHeatmapData1.json" and "TimelineHeatmapData2.json" for an example.
 1. If the data matrix is 2D, values will be normalized based on the entire matrix. Columns are variables, and rows are observations. The chart will map the entire color column in the matrix to color codes, and will map the entire height column in the matrix to height of the blocks. <br>
 ```JavaScript
 settings["data"] = [["Mar 01", 1, 3, "03/01/2018"], ["Mar 02", 2, 15, "03/02/2018"]];
