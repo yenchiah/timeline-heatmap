@@ -92,6 +92,12 @@ Prevent adding events to blocks with color value zero.
 settings["noEventWhenColorValueZero"] = true // do not add event to a block when its color value is zero
 ```
 
+### "noColorForSelectedBlock"
+No color for the selected block (default color is blue).
+```JavaScript
+settings["noColorForSelectedBlock"] = true
+```
+
 ### "heightBin" and "heightRange"
 The bin and range of the height that will be used to render the blocks.
 ```JavaScript
