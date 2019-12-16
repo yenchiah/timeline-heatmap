@@ -125,14 +125,6 @@ settings["select"] = function ($e, obj) {
 };
 ```
 
-### "create"
-The callback event when the chart is created.
-```JavaScript
-settings["create"] = function (obj) {
-  console.log("create", obj);
-};
-```
-
 ### "addLeftArrow"
 Add an arrow on the left of the timeline for appending new data. If this setting is a function, when the arrow is clicked, the function will be triggered.
 ```JavaScript
@@ -149,6 +141,12 @@ settings["addLeftArrow"] = function (obj) {
 The text on the bottom of the arrow.
 ```JavaScript
 settings["leftArrowLabel"] = "More";
+```
+
+### "plotDataWhenCreated"
+Indicate if the chart needs to be plotted when the object is created.
+```JavaScript
+settings["plotDataWhenCreated"] = true;
 ```
 
 # Public Methods
