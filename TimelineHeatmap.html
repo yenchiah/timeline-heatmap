@@ -1,11 +1,12 @@
 <!doctype html>
 <html>
+
 <head>
   <title>Timeline Heatmap</title>
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700,600,300" rel="stylesheet" type="text/css">
   <link href="https://fonts.googleapis.com/css?family=Open+Sans+Condensed:700" rel="stylesheet" type="text/css">
   <link href="https://fonts.googleapis.com/css?family=Raleway:400,500" rel="stylesheet" type="text/css">
-  <link href="TimelineHeatmap.css" media="screen" rel="stylesheet" type="text/css"/>
+  <link href="TimelineHeatmap.css" media="screen" rel="stylesheet" type="text/css" />
   <script src="jquery.min.js" type="text/javascript"></script>
   <script src="TimelineHeatmap.js" type="text/javascript"></script>
 
@@ -59,12 +60,18 @@
     }
 
     .noselect {
-      -webkit-touch-callout: none; /* iOS Safari */
-      -webkit-user-select: none; /* Chrome/Safari/Opera */
-      -khtml-user-select: none; /* Konqueror */
-      -moz-user-select: none; /* Firefox */
-      -ms-user-select: none; /* Internet Explorer/Edge */
-      user-select: none; /* Non-prefixed version, currently not supported by any browser */
+      -webkit-touch-callout: none;
+      /* iOS Safari */
+      -webkit-user-select: none;
+      /* Chrome/Safari/Opera */
+      -khtml-user-select: none;
+      /* Konqueror */
+      -moz-user-select: none;
+      /* Firefox */
+      -ms-user-select: none;
+      /* Internet Explorer/Edge */
+      user-select: none;
+      /* Non-prefixed version, currently not supported by any browser */
     }
   </style>
 
@@ -99,10 +106,6 @@
           select: function ($e, obj) {
             console.log("select", $e.data(), obj);
           },
-          create: function (obj) {
-            console.log("create", obj);
-            obj.selectFirstBlock();
-          },
           data: data1["data"],
           columnNames: data1["columnNames"],
           dataIndexForLabels: 0, // columnNames[0] is used for the label of the block
@@ -125,6 +128,7 @@
           leftArrowLabel: "More"
         };
         chart_1 = new edaplotjs.TimelineHeatmap("chart-container-1", chart_settings_1);
+        chart_1.selectFirstBlock();
 
         // Set the button to update chart_1
         $("#chart-1-update-data-btn").on("click", function () {
@@ -164,18 +168,13 @@
           colorBin: [0, 2, 4, 8, 16],
           colorRange: ["#dcdcdc", "#52b947", "#f3ec19", "#f57e20", "#ed1f24", "#991b4f"],
           heightBin: [10, 40],
-          heightRange: ["33%", "66%", "100%"],
-          create: function (obj) {
-            obj.selectLastBlock();
-          }
+          heightRange: ["33%", "66%", "100%"]
         };
         chart_3 = new edaplotjs.TimelineHeatmap("chart-container-3", chart_settings_3);
+        chart_3.selectLastBlock();
 
         // 2D data with gray-scale color
         var chart_settings_4 = {
-          create: function (obj) {
-            obj.selectFirstBlock();
-          },
           data: data2["data"],
           columnNames: data2["columnNames"],
           dataIndexForLabels: 0, // columnNames[0] is used for the label of the block
@@ -197,6 +196,7 @@
           }
         };
         chart_4 = new edaplotjs.TimelineHeatmap("chart-container-4", chart_settings_4);
+        chart_4.selectFirstBlock();
 
         // 2D data with color
         var chart_settings_5 = {
@@ -223,12 +223,10 @@
           colorBin: [0, 2, 4, 8, 16],
           colorRange: ["#dcdcdc", "#52b947", "#f3ec19", "#f57e20", "#ed1f24", "#991b4f"],
           heightBin: [10, 40],
-          heightRange: ["33%", "66%", "100%"],
-          create: function (obj) {
-            obj.selectLastBlock();
-          }
+          heightRange: ["33%", "66%", "100%"]
         };
         chart_6 = new edaplotjs.TimelineHeatmap("chart-container-6", chart_settings_6);
+        chart_6.selectLastBlock();
 
         // 2D data with binned gray-scale color only
         var chart_settings_7 = {
@@ -241,14 +239,12 @@
           colorBin: [0, 2, 4, 8, 16],
           colorRange: ["#ffffff", "#52b947", "#f3ec19", "#f57e20", "#ed1f24", "#991b4f"],
           noEventWhenColorValueZero: true, // do not add event to a block when its color value is zero
-          create: function (obj) {
-            obj.selectLastBlock();
-          },
           select: function ($e, obj) {
             console.log("select", $e.data(), obj);
           }
         };
         chart_7 = new edaplotjs.TimelineHeatmap("chart-container-7", chart_settings_7);
+        chart_7.selectLastBlock();
       });
     }
 
@@ -264,4 +260,5 @@
 <div id="chart-container-6" class="noselect chart-container"></div>
 <div id="chart-container-7" class="noselect chart-container"></div>
 </body>
+
 </html>
